@@ -7,18 +7,24 @@ class PanelTugas extends StatefulWidget {
     super.key,
     required this.judul,
     required this.daftar,
+    required this.totalTugas,
     required this.jumlahSelesai,
     required this.galat,
+    required this.hanyaBelumSelesai,
     required this.onTambah,
     required this.onUbahStatus,
+    required this.onUbahFilter,
   });
 
   final String judul;
   final List<Tugas> daftar;
+  final int totalTugas;
   final int jumlahSelesai;
   final String? galat;
+  final bool hanyaBelumSelesai;
   final bool Function(String) onTambah;
   final ValueChanged<int> onUbahStatus;
+  final ValueChanged<bool> onUbahFilter;
 
   @override
   State<PanelTugas> createState() => _PanelTugasState();
@@ -59,11 +65,24 @@ class _PanelTugasState extends State<PanelTugas> {
           FilledButton(onPressed: _simpan, child: const Text('Tambah tugas')),
           const SizedBox(height: 22),
           Text(
-            '${widget.jumlahSelesai} dari ${widget.daftar.length} selesai',
+            '${widget.jumlahSelesai} dari ${widget.totalTugas} selesai',
             style: Theme.of(context).textTheme.titleMedium,
           ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: FilterChip(
+              key: const ValueKey('filter-belum-selesai'),
+              label: const Text('Belum selesai'),
+              selected: widget.hanyaBelumSelesai,
+              onSelected: widget.onUbahFilter,
+            ),
+          ),
           const Divider(),
-          if (widget.daftar.isEmpty) const Text('Belum ada tugas.'),
+          if (widget.totalTugas == 0)
+            const Text('Belum ada tugas.')
+          else if (widget.daftar.isEmpty)
+            const Text('Tidak ada tugas yang belum selesai.'),
           for (final tugas in widget.daftar)
             CheckboxListTile(
               key: ValueKey(tugas.id),

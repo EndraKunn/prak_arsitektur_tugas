@@ -25,11 +25,14 @@ class _LayarMvvmState extends State<LayarMvvm> {
     listenable: _viewModel,
     builder: (context, child) => PanelTugas(
       judul: 'Daftar Tugas · MVVM',
-      daftar: _viewModel.daftar,
+      daftar: _viewModel.daftarTerlihat,
+      totalTugas: _viewModel.totalTugas,
       jumlahSelesai: _viewModel.jumlahSelesai,
       galat: _viewModel.galat,
+      hanyaBelumSelesai: _viewModel.hanyaBelumSelesai,
       onTambah: _viewModel.tambah,
       onUbahStatus: _viewModel.ubahStatus,
+      onUbahFilter: _viewModel.ubahFilter,
     ),
   );
 }

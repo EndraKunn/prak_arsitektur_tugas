@@ -7,7 +7,7 @@ import 'pengendali_tugas.dart';
 class LayarMvc extends StatefulWidget {
   const LayarMvc({super.key});
 
-  @override 
+  @override
   State<LayarMvc> createState() => _LayarMvcState();
 }
 
@@ -24,13 +24,19 @@ class _LayarMvcState extends State<LayarMvc> {
     setState(() => _pengendali.ubahStatus(id));
   }
 
+ void _ubahFilter(bool aktif) {
+  setState(() => _pengendali.ubahFilter(aktif));
+}
   @override
   Widget build(BuildContext context) => PanelTugas(
     judul: 'Daftar Tugas · MVC',
-    daftar: _pengendali.daftar,
+    daftar: _pengendali.daftarTerlihat,
+    totalTugas: _pengendali.totalTugas,
     jumlahSelesai: _pengendali.jumlahSelesai,
     galat: _pengendali.galat,
+    hanyaBelumSelesai: _pengendali.hanyaBelumSelesai,
     onTambah: _tambah,
     onUbahStatus: _ubahStatus,
+    onUbahFilter: _ubahFilter,
   );
 }
