@@ -1,11 +1,36 @@
 import 'package:flutter/material.dart';
 
-class LayarMvc extends StatelessWidget {
+import '../data/repositori_tugas.dart';
+import '../ui/panel_tugas.dart';
+import 'pengendali_tugas.dart';
+
+class LayarMvc extends StatefulWidget {
   const LayarMvc({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Daftar Tugas · MVC')),
-    body: const Center(child: Text('Implementasikan layar MVC.')),
+  State<LayarMvc> createState() => _LayarMvcState();
+}
+
+class _LayarMvcState extends State<LayarMvc> {
+  final _pengendali = PengendaliTugas(RepositoriTugas());
+
+  bool _tambah(String input) {
+    final berhasil = _pengendali.tambah(input);
+    setState(() {});
+    return berhasil;
+  }
+
+  void _ubahStatus(int id) {
+    setState(() => _pengendali.ubahStatus(id));
+  }
+
+  @override
+  Widget build(BuildContext context) => PanelTugas(
+    judul: 'Daftar Tugas · MVC',
+    daftar: _pengendali.daftar,
+    jumlahSelesai: _pengendali.jumlahSelesai,
+    galat: _pengendali.galat,
+    onTambah: _tambah,
+    onUbahStatus: _ubahStatus,
   );
 }
